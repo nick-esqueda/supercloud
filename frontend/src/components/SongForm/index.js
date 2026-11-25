@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { postToS3, getSongDuration, secondsToMSS } from "./utils";
+import { postToS3, resizeImage, getSongDuration, secondsToMSS } from "./utils";
 import { editSong, postSong } from "../../store/songs";
 
 import LoadingBar, { showLoading, hideLoading } from 'react-redux-loading-bar';
@@ -56,7 +56,8 @@ export default function SongForm({ song, closeModal }) {
 
     const res = await fetch('/api/s3URL');
     const { url } = await res.json();
-    const fileURL = await postToS3(url, file);
+    const body = inputName === 'artwork' ? await resizeImage(file) : file;
+    const fileURL = await postToS3(url, body);
 
     dispatch(hideLoading());
     if (inputName === 'song') return setSongURL(fileURL);
