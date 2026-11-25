@@ -53,6 +53,7 @@ export const resizeImage = async (file) => {
   }
 }
 
+// PUTs a file to a presigned S3 URL. Returns true if the upload succeeded.
 export const postToS3 = async (url, body) => {
   try {
     const res = await fetch(url, {
@@ -64,16 +65,13 @@ export const postToS3 = async (url, body) => {
       body,
     });
     
-    if (res.ok) {
-      const songURL = res.url.split('?')[0];
-      return songURL;
-    } else {
-      console.error('response from s3 fetch not ok, but did not error out');
-    }
-    
+    if (!res.ok) console.error('response from s3 fetch not ok, but did not error out');
+    return res.ok;
+
   } catch(e) {
     console.log('PUT REQUEST TO S3 FAILED!');
     console.log(e);
+    return false;
   }
 }
 
