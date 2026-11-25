@@ -6,6 +6,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import { useProfileTab } from '../../Context/ProfileTabContext';
 import { fetchArtist } from '../../store/artists';
 import { fetchArtistsLikedSongs, fetchArtistsSongs } from '../../store/songs';
+import { DEFAULT_IMAGE_URL, fallbackToDefaultImage } from '../../utils';
 import CommentCard from '../CommentCard';
 import SongCardSmall from '../SongCard/SongCardSmall';
 import ProfileBody from './ProfileBody';
@@ -48,10 +49,8 @@ export default function ProfilePage() {
         </div>
 
         <div className='user_info_container'>
-          <img src={artist.profileImageURL
-            ? artist.profileImageURL
-            : "https://images.unsplash.com/photo-1557682257-2f9c37a3a5f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGdyYWRpZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-          }
+          <img src={artist.profileImageURL || DEFAULT_IMAGE_URL}
+            onError={fallbackToDefaultImage}
             alt='profile'
           />
           <div className='profile__info'>

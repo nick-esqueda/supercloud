@@ -1,3 +1,11 @@
+export const DEFAULT_IMAGE_URL = 'https://images.unsplash.com/photo-1557682257-2f9c37a3a5f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGdyYWRpZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60';
+
+// <img onError> handler: swaps a broken image (dead host, 404, etc.) for the default image.
+// The src check stops an infinite loop if the default image itself fails to load.
+export const fallbackToDefaultImage = e => {
+  if (e.currentTarget.src !== DEFAULT_IMAGE_URL) e.currentTarget.src = DEFAULT_IMAGE_URL;
+}
+
 export const getTimeElapsed = createdAt => {
   const ms = Date.now() - Date.parse(createdAt);
   

@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { DEFAULT_IMAGE_URL, fallbackToDefaultImage } from '../../utils';
 import './ArtistBadge.css';
 
 export default function ArtistBadge({ artist }) {
@@ -7,10 +8,8 @@ export default function ArtistBadge({ artist }) {
   return (
     <div className='artist_badge'>
       <NavLink to={`/users/${artist.id}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}>
-        <img src={artist.profileImageURL
-          ? artist?.profileImageURL
-          : "https://images.unsplash.com/photo-1557682257-2f9c37a3a5f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGdyYWRpZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-        }
+        <img src={artist.profileImageURL || DEFAULT_IMAGE_URL}
+          onError={fallbackToDefaultImage}
           alt='artist'
         />
       </NavLink>

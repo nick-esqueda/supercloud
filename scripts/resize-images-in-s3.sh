@@ -1,6 +1,6 @@
 #!/bin/bash
 
-S3_BUCKET="supercloud-bucket"
+S3_BUCKET="supercloud-userdata"
 # S3_FOLDER_PREFIX="user-seeds/banners-for-user-seeds"
 # S3_FOLDER_PREFIX="royalty-free-song-seeds/artwork-for-song-seeds"
 S3_FOLDER_PREFIX="royalty-free-song-seeds/artwork-for-song-seeds-2"

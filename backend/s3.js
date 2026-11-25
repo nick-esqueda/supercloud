@@ -5,9 +5,9 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const randomBytes = promisify(crypto.randomBytes)
 
-const bucketName = 'supercloud-bucket';
+const bucketName = process.env.S3_USERDATA_BUCKET;
 const s3 = new aws.S3({
-  region: 'us-east-1',
+  region: 'us-east-2',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   signatureVersion: 'v4',

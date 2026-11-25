@@ -10,6 +10,7 @@ services:
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_USERDATA_BUCKET=${S3_USERDATA_BUCKET}
     depends_on:
       db:
         condition: service_healthy

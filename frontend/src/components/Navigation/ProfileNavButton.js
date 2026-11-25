@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from "react-router-dom";
 import { useProfileTab } from "../../Context/ProfileTabContext";
 import { logoutUser } from '../../store/session';
+import { fallbackToDefaultImage } from '../../utils';
 
 function ProfileNavButton({ user }) {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function ProfileNavButton({ user }) {
     <div className="header__profileNavBtn" onClick={openMenu}>
       <img
         src={user.profileImageURL ? user.profileImageURL : "https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGdyYWRpZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"}
+        onError={fallbackToDefaultImage}
         alt="profile-picture"
         className="header__userPfp"
       />

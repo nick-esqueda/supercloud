@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteComment } from '../../store/songs';
+import { DEFAULT_IMAGE_URL, fallbackToDefaultImage } from '../../utils';
 
 import './CommentCard.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,10 +45,8 @@ export default function CommentCard({ comment, on }) {
     <div className='comment__wrapper' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className='comment__left'>
         <img
-          src={comment.User.profileImageURL
-            ? comment.User.profileImageURL
-            : "https://images.unsplash.com/photo-1557682257-2f9c37a3a5f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGdyYWRpZW50fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-          }
+          src={comment.User.profileImageURL || DEFAULT_IMAGE_URL}
+          onError={fallbackToDefaultImage}
           onClick={() => {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
             history.push(`/users/${comment.User.id}`)
