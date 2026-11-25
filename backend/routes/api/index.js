@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const asyncHandler = require('express-async-handler');
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const songsRouter = require('./songs.js');
@@ -16,10 +17,10 @@ router.use('/search', searchRouter);
 
 
 // GENERATE S3 URL TO SEND BACK TO CLIENT
-router.get('/s3URL', async (req, res) => {
-  const url = await generateUploadURL();
-  return res.json({ url });
-});
+router.get('/s3URL', asyncHandler(async (req, res) => {
+  const { uploadURL, fileURL } = await generateUploadURL();
+  return res.json({ url: uploadURL, fileURL });
+}));
 
 
 // // TEST ROUTES ***********************************************************

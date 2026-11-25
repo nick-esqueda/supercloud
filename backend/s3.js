@@ -6,6 +6,8 @@ const { promisify } = require('util');
 const randomBytes = promisify(crypto.randomBytes)
 
 const bucketName = process.env.S3_USERDATA_BUCKET;
+// The bucket is private; files are served through CloudFront at this URL (no trailing slash)
+const mediaBaseURL = process.env.MEDIA_BASE_URL;
 const s3 = new aws.S3({
   region: 'us-east-2',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -13,7 +15,10 @@ const s3 = new aws.S3({
   signatureVersion: 'v4',
 });
 
+// Returns a presigned URL the client PUTs the file to, and the public URL it will be served from.
 const generateUploadURL = async () => {
+  if (!mediaBaseURL) throw new Error('MEDIA_BASE_URL is not set');
+
   const rawBytes = await randomBytes(16);
   const filename = rawBytes.toString('hex');
 
@@ -25,7 +30,7 @@ const generateUploadURL = async () => {
   };
 
   const uploadURL = await s3.getSignedUrlPromise('putObject', params);
-  return uploadURL;
+  return { uploadURL, fileURL: `${mediaBaseURL}/${filename}` };
 }
 
 module.exports = { generateUploadURL };

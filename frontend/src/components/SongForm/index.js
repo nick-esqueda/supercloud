@@ -55,11 +55,13 @@ export default function SongForm({ song, closeModal }) {
     if (inputName === 'song') dispatch(showLoading());
 
     const res = await fetch('/api/s3URL');
-    const { url } = await res.json();
+    // url: presigned S3 upload URL; fileURL: where the file will be served from (CloudFront)
+    const { url, fileURL } = await res.json();
     const body = inputName === 'artwork' ? await resizeImage(file) : file;
-    const fileURL = await postToS3(url, body);
+    const uploaded = await postToS3(url, body);
 
     dispatch(hideLoading());
+    if (!uploaded) return;
     if (inputName === 'song') return setSongURL(fileURL);
     if (inputName === 'artwork') return setArtworkURL(fileURL);
   }
