@@ -152,6 +152,7 @@ rule_for_key() {
   for entry in "${RULES[@]}"; do
     [ "${entry%%|*}" = "$dir" ] && { echo "${entry##*|}"; return; }
   done
+  return 0  # no rule: print nothing (the caller skips the key). Without this, set -e would exit the script.
 }
 
 $DRY_RUN && echo "DRY RUN: nothing will be written to S3"
